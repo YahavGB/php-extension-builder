@@ -61,7 +61,7 @@
 #   The PHP binaries directory (the path for "phpize" and "php-config" files)
 #: ${PHP_BIN_DIR:=""}
 
-#   The action to take - compile|clean
+#   The action to take - compile|clean|configure
 : ${PHPEXT_ACTION:="compile"}
 
 #   Create m4 and w32 files
@@ -102,6 +102,7 @@ Actions:
     -v      Version
     -c      Clear the project directory from last build
     -o      Only compile the project with phpize without creating m4 and w32 files
+    -m      Only create configuration files without compiling the project
 
 Simple compile usage:
 sudo $0 \\
@@ -309,6 +310,9 @@ while getopts ":b:n:p:d:vhco" opt; do
         c)
             PHPEXT_ACTION="clean"
         ;;
+        m)
+            PHPEXT_ACTION="configure"
+        ;;
         o)
             BUILD_CONFIG_FILES="NO"
         ;;
@@ -364,6 +368,14 @@ if test $PHPEXT_ACTION = "clean"; then
     if test $BUILD_CONFIG_FILES = "YES"; then
         clean_config_files
     fi
+    exit 0
+elif test $PHPEXT_ACTION = "configure"; then
+    #	".m4" file for Linux based OS
+    create_m4_config_file
+
+    #	".w32" file for Windows based OS
+    create_w32_config_file
+
     exit 0
 fi
 
