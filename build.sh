@@ -29,7 +29,7 @@
 : ${PHPIZE_FILE_NAME:=phpize}
 
 #   "php-config" script file name
-: ${PHP_CONFIG_FILE_NAME:=php-config
+: ${PHP_CONFIG_FILE_NAME:=php-config}
 
 #   Additional C flags to use
 #   The current flags used in order to build the extension for i386
